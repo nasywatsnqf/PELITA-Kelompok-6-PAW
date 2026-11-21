@@ -114,13 +114,23 @@
             font-size: 11px;
             color: #c13d56;
         }
+
+        .logo img {
+            width: 120px;
+            height:auto;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto 10px;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
 
-        <div class="logo">Pelita</div>
+        <div class="logo">
+            <img src="{{ asset('images/logo-pelita.png') }}" alt="Logo PELITA">
+        </div>
 
         <h2>Buat Akun PELITA Anda</h2>
 
