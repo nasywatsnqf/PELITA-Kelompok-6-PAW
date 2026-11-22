@@ -19,3 +19,5 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.store');
 Route::get('/dashboard', fn () => 'Login berhasil (dashboard sementara)')
     ->middleware('auth')
     ->name('dashboard');
+
+Route::view('/profil', 'profil')->name('profil');
