@@ -24,15 +24,56 @@
                class="{{ request()->routeIs('whisper-wall.*') ? 'active' : '' }}">Whisper wall</a>
         </nav>
 
-        <div class="user">
-            <span>{{ auth()->user()->name ?? 'Tamu' }}</span>
-            <i class="bi bi-person-circle"></i>
+       <div class="user-menu" id="userMenu">
+    <button type="button" class="user-btn" id="userBtn" aria-haspopup="true" aria-expanded="false">
+        <span>{{ auth()->check() ? auth()->user()->name : 'Tamu' }}</span>
+        <i class="bi bi-person-circle"></i>
+    </button>
+
+    <div class="user-dropdown">
+        @auth
+            <div class="user-info">
+                <strong>{{ auth()->user()->name }}</strong>
+                <small>{{ auth()->user()->email }}</small>
+            </div>
+            <a href="{{ Route::has('profile.edit') ? route('profile.edit') : '#' }}">
+                <i class="bi bi-person"></i> Profil Saya
+            </a>
+            @if (Route::has('logout'))
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"><i class="bi bi-box-arrow-right"></i> Keluar</button>
+                </form>
+            @endif
+        @else
+            <a href="{{ Route::has('login') ? route('login') : '#' }}"><i class="bi bi-box-arrow-in-right"></i> Masuk</a>
+            <a href="{{ Route::has('register') ? route('register') : '#' }}"><i class="bi bi-person-plus"></i> Daftar</a>
+        @endauth
         </div>
+    </div>
     </header>
 
     <main>
         @yield('content')
     </main>
+
+    <script>
+    const userMenu = document.getElementById('userMenu');
+    const userBtn = document.getElementById('userBtn');
+
+    function closeUserMenu() {
+        userMenu.classList.remove('open');
+        userBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    userBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = userMenu.classList.toggle('open');
+        userBtn.setAttribute('aria-expanded', open);
+    });
+    document.addEventListener('click', (e) => { if (!userMenu.contains(e.target)) closeUserMenu(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeUserMenu(); });
+    </script>
 
     @stack('scripts')
 </body>
