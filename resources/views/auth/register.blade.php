@@ -1,15 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register | PELITA</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         * {
             box-sizing: border-box;
@@ -18,80 +17,103 @@
 
         body {
             margin: 0;
-            background: #f7f5f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 25px;
-            color: #263044;
+            padding: 20px;
+            background: #ffffff;
+            color: #252525;
         }
 
         .container {
-            background: white;
             width: 100%;
-            max-width: 780px;
-            padding: 40px 55px;
-            border-radius: 12px;
+            max-width: 600px;
+            margin: 55px auto 30px;
+            padding: 0 8px;
             text-align: center;
         }
 
-        .logo {
-            color: #a13d4b;
-            font-size: 42px;
-            font-weight: bold;
-            margin-bottom: 5px;
+        /* Logo */
+        .logo img {
+            width: 120px;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            margin: 0 auto 10px;
         }
 
+        /* Judul dan deskripsi */
         h2 {
             color: #792638;
+            font-size: 20px;
+            font-weight: 600;
             margin: 10px 0;
+            text-align: center;
         }
 
         .description {
             color: #c13d56;
-            margin-bottom: 25px;
+            font-size: 14px;
+            margin: 0 0 25px;
+            text-align: center;
+        }
+
+        /* Form */
+        form {
+            width: 100%;
+            text-align: left;
         }
 
         .form-group {
             text-align: left;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #252525;
         }
 
         input {
+            display: block;
             width: 100%;
-            padding: 13px;
+            padding: 10px 13px;
             border: none;
             border-radius: 7px;
             background: #fff0c9;
+            font-size: 12px;
             outline-color: #a13d4b;
         }
 
+        input::placeholder {
+            color: #777777;
+        }
+
+        /* Pesan error dan berhasil */
         .error {
             color: #c0394b;
-            font-size: 13px;
+            font-size: 11px;
             margin-top: 5px;
         }
 
         .success {
             color: #287a46;
+            font-size: 13px;
             margin-bottom: 15px;
+            text-align: center;
         }
 
+        /* Tombol daftar */
         button {
-            margin-top: 15px;
-            padding: 11px 30px;
+            display: block;
+            margin: 20px auto 15px;
+            padding: 9px 25px;
             background: white;
             border: 1px solid #a13d4b;
             border-radius: 7px;
             color: #792638;
-            font-weight: bold;
+            font-size: 13px;
+            font-weight: 600;
             cursor: pointer;
         }
 
@@ -100,27 +122,34 @@
             color: white;
         }
 
+        /* Link login */
         .login-link {
-            margin-top: 20px;
+            margin-top: 15px;
             color: #c13d56;
+            font-size: 13px;
+            text-align: center;
         }
 
         .login-link a {
             color: #792638;
         }
 
+        /* Footer */
         .footer {
-            margin-top: 25px;
-            font-size: 11px;
+            margin-top: 20px;
+            font-size: 10px;
             color: #c13d56;
+            text-align: center;
         }
 
-        .logo img {
-            width: 120px;
-            height:auto;
-            object-fit: contain;
-            display: block;
-            margin: 0 auto 10px;
+        @media (max-width: 600px) {
+            .container {
+                margin-top: 30px;
+            }
+
+            .description {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -148,9 +177,12 @@
 
             <div class="form-group">
                 <label>Nama atau Alias</label>
-                <input type="text" name="name"
+                <input
+                    type="text"
+                    name="name"
                     placeholder="Gunakan nama samaran jika perlu"
-                    value="{{ old('name') }}">
+                    value="{{ old('name') }}"
+                >
 
                 @error('name')
                     <div class="error">{{ $message }}</div>
@@ -159,9 +191,12 @@
 
             <div class="form-group">
                 <label>Email / ID pengguna</label>
-                <input type="email" name="email"
+                <input
+                    type="email"
+                    name="email"
                     placeholder="@email.com"
-                    value="{{ old('email') }}">
+                    value="{{ old('email') }}"
+                >
 
                 @error('email')
                     <div class="error">{{ $message }}</div>
@@ -170,8 +205,11 @@
 
             <div class="form-group">
                 <label>Kata Sandi</label>
-                <input type="password" name="password"
-                    placeholder="Minimal 8 karakter">
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Minimal 8 karakter"
+                >
 
                 @error('password')
                     <div class="error">{{ $message }}</div>
@@ -180,15 +218,19 @@
 
             <div class="form-group">
                 <label>Konfirmasi Kata Sandi</label>
-                <input type="password" name="password_confirmation"
-                    placeholder="Masukkan ulang kata sandi">
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    placeholder="Masukkan ulang kata sandi"
+                >
             </div>
 
             <button type="submit">Daftar Sekarang →</button>
         </form>
 
         <p class="login-link">
-            Sudah memiliki Akun? <a href="#">Masuk</a>
+            Sudah memiliki Akun?
+            <a href="{{ url('/login') }}">Masuk</a>
         </p>
 
         <p class="footer">
