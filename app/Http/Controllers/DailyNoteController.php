@@ -12,22 +12,35 @@ class DailyNoteController extends Controller
     public function index(Request $request)
     {
         $filter = $request->query('filter', 'all');
+        $q = trim((string) $request->query('q', ''));
         $mine = fn () => DailyNote::where('user_id', auth()->id());
+
         $counts = [
-            'all'           => $mine()->count(),
-            'kronologi'     => $mine()->where('category', 'kronologi')->count(),
-            'curahan'       => $mine()->where('category', 'curahan')->count(),
-            'pinned'        => $mine()->where('is_pinned', true)->count(),
+            'all'       => $mine()->count(),
+            'kronologi' => $mine()->where('category', 'kronologi')->count(),
+            'curahan'   => $mine()->where('category', 'curahan')->count(),
+            'pinned'    => $mine()->where('is_pinned', true)->count(),
         ];
 
         $notes = $mine()
-            ->when(in_array($filter, ['kronologi', 'curahan']), fn ($q) => $q->where('category', $filter))
-            ->when($filter === 'pinned', fn ($q) => $q->where('is_pinned', true))
+            ->when(in_array($filter, ['kronologi', 'curahan']), fn ($qb) => $qb->where('category', $filter))
+            ->when($filter === 'pinned', fn ($qb) => $qb->where('is_pinned', true))
             ->orderByDesc('is_pinned')
             ->orderByDesc('event_at')
             ->get();
 
-        return view('daily-notes.index', compact('notes', 'counts', 'filter')); 
+        if ($q !== '') {
+            $needle = mb_strtolower($q);
+            $notes = $notes->filter(function ($n) use ($needle) {
+                $haystack = $n->title.' '.($n->is_locked ? '' : strip_tags($n->content));
+
+                return str_contains(mb_strtolower($haystack), $needle);
+            })->values();
+        }
+
+        $latest = $mine()->latest('updated_at')->first()?->updated_at;
+
+        return view('daily-notes.index', compact('notes', 'counts', 'filter', 'q', 'latest'));    
     }
 
     public function store(Request $request)
