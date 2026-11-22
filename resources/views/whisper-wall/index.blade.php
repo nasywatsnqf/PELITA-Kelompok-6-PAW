@@ -97,24 +97,78 @@
 @push('scripts')
 <script>
     const carousel = document.getElementById('carousel');
-    document.getElementById('prev').onclick = () => carousel.scrollBy({ left: -420, behavior: 'smooth' });
-    document.getElementById('next').onclick = () => carousel.scrollBy({ left: 420, behavior: 'smooth' });
+    const SPEED = 35; // piksel per detik, ubah untuk lebih cepat atau lambat
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    document.querySelectorAll('.react').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            btn.disabled = true;
-            const res = await fetch(btn.dataset.url, {
-                method: 'POST',
-                headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json' },
-            });
-            if (res.ok) {
-                const data = await res.json();
-                btn.querySelector('span').textContent = data.count;
-                btn.classList.add('reacted');
-            } else {
-                btn.disabled = false;
-            }
+    let loopWidth = 0, pos = 0, paused = false, resumeTimer, last = null;
+
+    // Gandakan kartu agar putarannya mulus (hanya jika kartu melebihi lebar layar)
+    function setupLoop() {
+        carousel.querySelectorAll('.card.clone').forEach(c => c.remove());
+        loopWidth = 0;
+
+        const originals = carousel.querySelectorAll('.card');
+        if (reduceMotion || originals.length === 0 || carousel.scrollWidth <= carousel.clientWidth) return;
+
+        originals.forEach(card => {
+            const copy = card.cloneNode(true);
+            copy.classList.add('clone');
+            carousel.appendChild(copy);
         });
+        loopWidth = carousel.querySelector('.card.clone').offsetLeft - originals[0].offsetLeft;
+    }
+
+    function pauseFor(ms) {
+        paused = true;
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(() => { pos = carousel.scrollLeft; paused = false; }, ms);
+    }
+
+    function tick(now) {
+        if (last === null) last = now;
+        const dt = Math.min(now - last, 50);
+        last = now;
+
+        if (loopWidth && !paused) {
+            pos += SPEED * dt / 1000;
+            if (pos >= loopWidth) pos -= loopWidth;
+            carousel.scrollLeft = pos;
+        }
+        requestAnimationFrame(tick);
+    }
+
+    // Panah
+    document.getElementById('prev').onclick = () => { pauseFor(1500); carousel.scrollBy({ left: -420, behavior: 'smooth' }); };
+    document.getElementById('next').onclick = () => { pauseFor(1500); carousel.scrollBy({ left: 420, behavior: 'smooth' }); };
+
+    // Berhenti saat kursor di atas kartu atau layar disentuh
+    carousel.addEventListener('mouseenter', () => { clearTimeout(resumeTimer); paused = true; });
+    carousel.addEventListener('mouseleave', () => { pos = carousel.scrollLeft; paused = false; });
+    carousel.addEventListener('touchstart', () => { clearTimeout(resumeTimer); paused = true; }, { passive: true });
+    carousel.addEventListener('touchend', () => pauseFor(2000), { passive: true });
+
+    // Reaksi (satu pendengar untuk semua kartu, termasuk salinan)
+    carousel.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.react');
+        if (!btn || btn.disabled) return;
+
+        const same = carousel.querySelectorAll('.react[data-url="' + btn.dataset.url + '"]');
+        same.forEach(b => b.disabled = true);
+
+        const res = await fetch(btn.dataset.url, {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json' },
+        });
+
+        if (res.ok) {
+            const data = await res.json();
+            same.forEach(b => { b.querySelector('span').textContent = data.count; b.classList.add('reacted'); });
+        } else {
+            same.forEach(b => b.disabled = false);
+        }
     });
+
+    window.addEventListener('load', () => { setupLoop(); requestAnimationFrame(tick); });
+    window.addEventListener('resize', () => { setupLoop(); pos = 0; carousel.scrollLeft = 0; });
 </script>
 @endpush
