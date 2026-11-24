@@ -65,6 +65,13 @@
             height: 56px;
         }
 
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
         .avatar-shield {
             position: absolute;
             right: -4px;
@@ -503,11 +510,15 @@
         <section class="profile-banner">
             <div class="avatar-wrap">
                 <div class="profile-avatar">
-                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <circle cx="32" cy="32" r="27" stroke="currentColor" stroke-width="5"/>
-                        <circle cx="32" cy="24" r="9" fill="currentColor"/>
-                        <path d="M14 49c2.8-9 9.2-13.5 18-13.5S47.2 40 50 49" fill="currentColor"/>
-                    </svg>
+                    @if ($user->profile_photo)
+                        <img src="{{ asset('storage/' . $user->profile_photo) }}" alt="Foto profil {{ $user->name }}">
+                    @else
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <circle cx="32" cy="32" r="27" stroke="currentColor" stroke-width="5"/>
+                            <circle cx="32" cy="24" r="9" fill="currentColor"/>
+                            <path d="M14 49c2.8-9 9.2-13.5 18-13.5S47.2 40 50 49" fill="currentColor"/>
+                        </svg>
+                    @endif
                 </div>
                 <span class="avatar-shield" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
