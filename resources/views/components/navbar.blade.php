@@ -36,9 +36,7 @@
         transition: color 0.2s ease;
     }
 
-    .navbar-menu a:hover {
-        color: #b43f5b;
-    }
+    .navbar-menu a:hover { color: #b43f5b; }
 
     .navbar-profile {
         display: flex;
@@ -56,11 +54,21 @@
     .profile-icon {
         width: 37px;
         height: 37px;
+        flex: 0 0 37px;
         border-radius: 50%;
+        overflow: hidden;
         background-color: #701d32;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .profile-icon img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        border-radius: 50%;
     }
 
     .profile-icon svg {
@@ -69,17 +77,9 @@
     }
 
     @media (max-width: 850px) {
-        .navbar {
-            padding: 0 3%;
-        }
-
-        .navbar-menu {
-            gap: 15px;
-        }
-
-        .navbar-menu a {
-            font-size: 12px;
-        }
+        .navbar { padding: 0 3%; }
+        .navbar-menu { gap: 15px; }
+        .navbar-menu a { font-size: 12px; }
     }
 
     @media (max-width: 600px) {
@@ -90,7 +90,6 @@
             gap: 12px;
             padding: 12px 4%;
         }
-
         .navbar-menu {
             order: 3;
             width: 100%;
@@ -98,14 +97,8 @@
             gap: 10px;
             overflow-x: auto;
         }
-
-        .navbar-menu a {
-            white-space: nowrap;
-        }
-
-        .navbar-logo img {
-            width: 95px;
-        }
+        .navbar-menu a { white-space: nowrap; }
+        .navbar-logo img { width: 95px; }
     }
 </style>
 
@@ -126,10 +119,14 @@
     <a href="{{ route('profil') }}" class="navbar-profile">
         <span>{{ Auth::user()->name }}</span>
         <div class="profile-icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="13" r="8" fill="#FFDFC4"/>
-                <path d="M5 35C5 26.7 11.7 21 20 21C28.3 21 35 26.7 35 35" fill="#FFDFC4"/>
-            </svg>
+            @if (Auth::user()->profile_photo)
+                <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}" alt="Foto profil">
+            @else
+                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="20" cy="13" r="8" fill="#FFDFC4"/>
+                    <path d="M5 35C5 26.7 11.7 21 20 21C28.3 21 35 26.7 35 35" fill="#FFDFC4"/>
+                </svg>
+            @endif
         </div>
     </a>
 </nav>

@@ -226,6 +226,69 @@
             font-weight: 600;
         }
 
+        .contact-state {
+            min-height: 94px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 13px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #fbf1e7;
+        }
+
+        .contact-avatar {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #f8e1e5;
+            color: #792638;
+        }
+
+        .contact-avatar svg {
+            width: 21px;
+            height: 21px;
+        }
+
+        .contact-details {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .contact-details h4 {
+            margin: 0 0 3px;
+            color: #792638;
+            font-size: 11px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .contact-details p {
+            margin: 0 0 3px;
+            color: #846e72;
+            font-size: 9px;
+        }
+
+        .contact-details a {
+            color: #a13d58;
+            font-size: 10px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .contact-saved {
+            align-self: flex-start;
+            padding: 4px 7px;
+            border-radius: 12px;
+            background: #f3e4df;
+            color: #792638;
+            font-size: 8px;
+            white-space: nowrap;
+        }
+
         .card-bottom {
             display: flex;
             align-items: center;
@@ -566,13 +629,38 @@
                     Penerima sinyal otomatis saat memicu Keluar Cepat / SOS
                 </p>
 
-                <div class="empty-state">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="9" cy="7" r="3"/>
-                        <path d="M3.5 19c.5-3.5 2.4-5.5 5.5-5.5 1.4 0 2.6.4 3.5 1.2M16 14l5 5m0-5-5 5"/>
-                    </svg>
-                    <h4>Belum ada kontak darurat</h4>
-                </div>
+                @if ($user->emergency_contact_name || $user->emergency_contact_relation || $user->emergency_contact_phone)
+                    <div class="contact-state">
+                        <div class="contact-avatar" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="7" r="3.5"/>
+                                <path d="M4.5 20c.7-4.1 3.2-6.2 7.5-6.2s6.8 2.1 7.5 6.2"/>
+                            </svg>
+                        </div>
+                        <div class="contact-details">
+                            <h4>{{ $user->emergency_contact_name ?: 'Kontak Darurat' }}</h4>
+                            @if ($user->emergency_contact_relation)
+                                <p>{{ $user->emergency_contact_relation }}</p>
+                            @endif
+                            @if ($user->emergency_contact_phone)
+                                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $user->emergency_contact_phone) }}">
+                                    {{ $user->emergency_contact_phone }}
+                                </a>
+                            @else
+                                <p>Nomor telepon belum ditambahkan</p>
+                            @endif
+                        </div>
+                        <span class="contact-saved">Tersimpan</span>
+                    </div>
+                @else
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="9" cy="7" r="3"/>
+                            <path d="M3.5 19c.5-3.5 2.4-5.5 5.5-5.5 1.4 0 2.6.4 3.5 1.2M16 14l5 5m0-5-5 5"/>
+                        </svg>
+                        <h4>Belum ada kontak darurat</h4>
+                    </div>
+                @endif
 
                 <div class="card-bottom">
                     <span class="small-text">Maks. 3 Kontak</span>
@@ -581,7 +669,7 @@
                             <circle cx="9" cy="8" r="3"/>
                             <path d="M3 20c.5-3.5 2.5-5 6-5 1.4 0 2.5.3 3.4.8M19 8v6m-3-3h6"/>
                         </svg>
-                        Tambahkan kontak darurat
+                        {{ ($user->emergency_contact_name || $user->emergency_contact_phone) ? 'Ubah kontak darurat' : 'Tambahkan kontak darurat' }}
                     </a>
                 </div>
             </div>
