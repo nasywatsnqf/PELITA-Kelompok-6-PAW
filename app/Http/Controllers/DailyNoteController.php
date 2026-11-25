@@ -25,14 +25,15 @@ class DailyNoteController extends Controller
         $notes = $mine()
             ->when(in_array($filter, ['kronologi', 'curahan']), fn ($qb) => $qb->where('category', $filter))
             ->when($filter === 'pinned', fn ($qb) => $qb->where('is_pinned', true))
-            ->orderByDesc('is_pinned')
-            ->orderByDesc('event_at')
+            ->when($filter === 'kronologi', 
+                fn ($qb) => $qb->orderBy('event_at'), 
+                fn ($qb) => $qb->orderByDesc('is_pinned')->orderByDesc('event_at'))
             ->get();
 
         if ($q !== '') {
             $needle = mb_strtolower($q);
             $notes = $notes->filter(function ($n) use ($needle) {
-                $haystack = $n->title.' '.($n->is_locked ? '' : strip_tags($n->content));
+                $haystack = $n->title.' '.($n->is_locked ? '' : ($n->plain_content));
 
                 return str_contains(mb_strtolower($haystack), $needle);
             })->values();

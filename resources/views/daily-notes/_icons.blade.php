@@ -7,6 +7,10 @@
 <symbol id="i-list" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></symbol>
 <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></symbol>
 <symbol id="i-face" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9.5h.01M15 9.5h.01"/></symbol>
+<symbol id="i-emo-gelisah" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 10.5h.01M15 10.5h.01"/><path d="M7.5 8l3-1.5M16.5 8l-3-1.5"/><path d="M8 16q1-1.5 2 0t2 0 2 0 2 0"/></symbol>
+<symbol id="i-emo-netral" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9.5h.01M15 9.5h.01M8.5 15h7"/></symbol>
+<symbol id="i-emo-kesal" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 10.5h.01M15 10.5h.01M7.5 8l3 1.5M16.5 8l-3 1.5M8.5 16.5q3.5-4 7 0"/></symbol>
+<symbol id="i-emo-senang" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9.5h.01M15 9.5h.01M8 14s1.5 2 4 2 4-2 4-2"/></symbol>
 <symbol id="i-clip" viewBox="0 0 24 24"><path d="M21 11l-9 9a5 5 0 01-7-7l9-9a3.5 3.5 0 015 5l-9 9a2 2 0 01-3-3l8-8"/></symbol>
 <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
 <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/></symbol>

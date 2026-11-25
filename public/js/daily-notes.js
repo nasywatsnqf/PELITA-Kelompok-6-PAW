@@ -58,8 +58,24 @@ document.addEventListener('DOMContentLoaded', () => {
     body.addEventListener('input', saveDraft);
 
     // Toolbar editor 
-    document.querySelectorAll('[data-cmd]').forEach((b) => {
-        b.addEventListener('click', () => { body.focus(); document.execCommand(b.dataset.cmd); saveDraft(); });
+    const cmdBtns = document.querySelectorAll('[data-cmd]');
+    const refreshToolbar = () => cmdBtns.forEach((b) => {
+        let on = false;
+        try { on = document.queryCommandState(b.dataset.cmd); } catch (e) {}
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', on);
+    });
+    cmdBtns.forEach((b) => {
+        b.addEventListener('mousedown', (e) => e.preventDefault());
+        b.addEventListener('click', () => {
+            body.focus();
+            document.execCommand(b.dataset.cmd);
+            refreshToolbar();
+            saveDraft();
+        });    
+    });
+    document.addEventListener('selectionchange', () => {
+        if (document.activeElement === body) refreshToolbar();
     });
 
     // Cap waktu

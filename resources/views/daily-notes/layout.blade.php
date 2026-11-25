@@ -10,7 +10,7 @@
 <body>
 @include('daily-notes._icons')      
 <nav>
-    <div class="logo"><svg><use href="#i-flame"/></svg>Pelita</div> 
+    <a href="{{ route('catatan.index') }}" class="logo"><img src="{{ asset('images/logo-pelita.svg') }}" alt="Pelita"></a>
     <a href="#">Beranda</a>
     <a href="#">Buat Laporan Khusus</a>
     <a href="{{ route('catatan.index') }}" class="on" aria-current="page">Catatan</a>

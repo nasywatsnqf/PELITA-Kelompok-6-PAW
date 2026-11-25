@@ -49,42 +49,26 @@
     <input type="search" name="q" value="{{ $q }}" placeholder="Cari catatan berdasarkan judul atau isi..." aria-label="Cari catatan">
 </form>
 
-@forelse ($notes as $n)
-    <article class="card note">
-        <div class="top">
-            <span class="badge">
-                <svg><use href="#i-{{ $n->category === 'kronologi' ? 'clock' : 'heart' }}"/></svg>
-                {{ $n->category === 'kronologi' ? 'Kronologi Kejadian' : 'Curahan Hati' }}
-            </span>
-            <span>{{ $n->event_at->translatedFormat('d M Y') }} • {{ $n->event_at->format('H:i') }} WIB</span>
-        </div>
-        <h3>{{ $n->title }}</h3>
-        <p>{{ $n->is_locked ? 'Isi catatan ini terkunci.' : \Illuminate\Support\Str::limit(strip_tags($n->content), 160) }}</p>
-        @if ($n->emotion)
-            <div class="cond"><svg><use href="#i-face"/></svg>Kondisi: {{ \App\Models\DailyNote::EMOTIONS[$n->emotion] ?? $n->emotion }}</div>
-        @endif
-        <div class="bar">
-            <div>
-                @if ($n->is_locked)
-                    <span style="display:flex;gap:6px;align-items:center"><svg><use href="#i-lock"/></svg>Terkunci</span>
-                @endif
-                <a href="{{ route('catatan.edit', $n) }}" aria-label="Ubah"><svg><use href="#i-edit"/></svg></a>
-                <form class="inline" method="POST" action="{{ route('catatan.pin', $n) }}">
-                    @csrf @method('PATCH')
-                    <button type="submit" class="{{ $n->is_pinned ? 'on' : '' }}" aria-label="Sematkan">
-                        <svg><use href="#i-pin"/></svg>{{ $n->is_pinned ? 'Tersemat' : '' }}
-                    </button>
-                </form>
-            </div>
-            <form class="inline" method="POST" action="{{ route('catatan.destroy', $n) }}" onsubmit="return confirm('Hapus catatan ini?')">
-                @csrf @method('DELETE')
-                <button type="submit" aria-label="Hapus"><svg><use href="#i-trash"/></svg></button>
-            </form>
-        </div>
-    </article>
-@empty
-    <div class="empty">{{ $emptyMsg }}</div>
-@endforelse
+@if ($notes->isEmpty())
+    <div class="empty">{{ $emptyMsg }}</div>>
+@elseif ($filter === 'kronologi')
+        <div class="tl">
+        @foreach ($notes->groupBy(fn ($n) => $n->event_at->format('Y-m-d')) as $items)
+            <div class="tl-day">{{ $items->first()->event_at->translatedFormat('d F Y') }}</div>
+            @foreach ($items as $n)
+                <div class="tl-item">
+                    <span class="tl-time">{{ $n->event_at->format('H.i') }} WIB</span>
+                    <span class="tl-col"><i></i></span>
+                    @include('daily-notes._card', ['n' => $n, 'timeline' => true])
+                </div>
+            @endforeach
+        @endforeach
+    </div>
+@else
+    @foreach ($notes as $n)
+        @include('daily-notes._card', ['n' => $n])
+    @endforeach
+@endif
 
 <section class="exp">
     <div>

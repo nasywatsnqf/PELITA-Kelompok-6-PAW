@@ -46,7 +46,7 @@
                 <input type="hidden" name="emotion" id="emotionInput" value="{{ $emo }}">
                 <div class="emo" id="emo">
                     @foreach (\App\Models\DailyNote::EMOTIONS as $key => $label)
-                        <button type="button" data-v="{{ $key }}" class="{{ $emo === $key ? 'on' : '' }}"><svg><use href="#i-face"/></svg>{{ $label }}</button>
+                        <button type="button" data-v="{{ $key }}" class="{{ $emo === $key ? 'on' : '' }}"><svg><use href="#i-emo-{{ $key }}"/></svg>{{ $label }}</button>
                     @endforeach
                 </div>
             </div>
