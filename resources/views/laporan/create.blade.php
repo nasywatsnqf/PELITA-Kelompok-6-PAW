@@ -7,368 +7,492 @@
     <title>Buat Laporan Khusus - PELITA</title>
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        *{
+    box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            font-family: Poppins, sans-serif;
-            background: #fff9fa;
-            color: #702536;
-            font-size: 14px;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff9fa;
+    color: #702536;
+    font-size: 14px;
+}
 
-        nav {
-            min-height: 76px;
-            padding: 10px 5%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 25px;
-            background: white;
-            border-bottom: 1px solid #f0e3e6;
-        }
 
-        .logo {
-            flex-shrink: 0;
-            width: 180px;
-        }
+nav {
+    min-height: 76px;
+    padding: 10px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    background: white;
+    border-bottom: 1px solid #f0e3e6;
+}
 
-        .logo img {
-            display: block;
-            width: 100%;
-            height: auto;
-            max-height: 52px;
-            object-fit: contain;
-            object-position: left center;
-        }
+.logo {
+    flex-shrink: 0;
+    width: 180px;
+}
 
-        .menu {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 30px;
-            flex: 1;
-        }
+.logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 52px;
+    object-fit: contain;
+    object-position: left center;
+}
 
-        .menu a {
-            text-decoration: none;
-            color: #754552;
-            font-size: 13px;
-            white-space: nowrap;
-        }
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 30px;
+    flex: 1;
+}
 
-        .menu a.active {
-            font-weight: bold;
-            color: #702536;
-        }
+.menu a {
+    text-decoration: none;
+    color: #754552;
+    font-size: 13px;
+    white-space: nowrap;
+}
 
-        .profile {
-            flex-shrink: 0;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #f8edef;
-            display: grid;
-            place-items: center;
-        }
+.menu a:hover {
+    color: #702536;
+}
 
-        .page {
-            max-width: 1200px;
-            margin: 35px auto;
-            padding: 0 20px;
-        }
+.menu a.active {
+    font-weight: bold;
+    color: #702536;
+}
 
-        .page-heading {
-            margin-bottom: 25px;
-        }
+.profile {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f8edef;
+    display: grid;
+    place-items: center;
+}
 
-        .page-heading h1 {
-            font-size: 27px;
-            margin: 0 0 8px;
-        }
 
-        .page-heading p {
-            margin: 0;
-            color: #a66c78;
-            line-height: 1.6;
-        }
+.page {
+    max-width: 1200px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
 
-        .layout {
-            display: grid;
-            grid-template-columns: minmax(0, 2fr) minmax(260px, 0.85fr);
-            gap: 22px;
-            align-items: start;
-        }
+.page-heading {
+    margin-bottom: 25px;
+}
 
-        .card {
-            background: white;
-            border: 1px solid #eedfe3;
-            border-radius: 13px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px #70253608;
-        }
+.heading-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
 
-        .section-title {
-            font-size: 17px;
-            margin: 0 0 7px;
-        }
+.page-heading h1 {
+    font-size: 27px;
+    margin: 0 0 8px;
+}
 
-        .section-desc {
-            color: #a77982;
-            font-size: 12px;
-            margin: 0 0 22px;
-            line-height: 1.5;
-        }
+.page-heading p {
+    margin: 0;
+    color: #a66c78;
+    line-height: 1.6;
+}
 
-        .field {
-            margin-bottom: 19px;
-        }
+.btn-history {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 17px;
+    background: #fff;
+    border: 1px solid #e8cdd4;
+    border-radius: 8px;
+    color: #702536;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none !important;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 13px;
-            font-weight: bold;
-        }
+.btn-history span {
+    font-size: 14px;
+}
 
-        .optional {
-            color: #a98b91;
-            font-weight: normal;
-        }
+.btn-history:hover {
+    background: #702536;
+    border-color: #702536;
+    color: #fff !important;
+    box-shadow: 0 3px 8px #70253620;
+    transform: translateY(-1px);
+}
 
-        input[type="text"],
-        input[type="date"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px 13px;
-            border: 1px solid #e6d5da;
-            border-radius: 7px;
-            background: #fffdfd;
-            color: #63313d;
-            font-family: inherit;
-            font-size: 13px;
-            outline: none;
-        }
+.btn-history:link,
+.btn-history:visited,
+.btn-history:active {
+    color: #702536;
+    text-decoration: none !important;
+}
 
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: #a65b6d;
-            box-shadow: 0 0 0 3px #f8edef;
-        }
 
-        textarea {
-            min-height: 115px;
-            resize: vertical;
-        }
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(260px, 0.85fr);
+    gap: 22px;
+    align-items: start;
+}
 
-        .category-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
 
-        .category-option {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            padding: 12px;
-            border: 1px solid #ead9de;
-            border-radius: 8px;
-            background: #fffdfd;
-            font-size: 12px;
-            font-weight: normal;
-            cursor: pointer;
-        }
+.card {
+    background: white;
+    border: 1px solid #eedfe3;
+    border-radius: 13px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px #70253608;
+}
 
-        .category-option input {
-            accent-color: #702536;
-        }
+.section-title {
+    font-size: 17px;
+    margin: 0 0 7px;
+}
 
-        .upload-box {
-            border: 2px dashed #dfc2ca;
-            background: #fff9fa;
-            border-radius: 10px;
-            padding: 27px 15px;
-            text-align: center;
-            color: #9d6673;
-        }
+.section-desc {
+    color: #a77982;
+    font-size: 12px;
+    margin: 0 0 22px;
+    line-height: 1.5;
+}
 
-        .upload-icon {
-            font-size: 27px;
-            margin-bottom: 8px;
-        }
 
-        .upload-box strong {
-            display: block;
-            margin-bottom: 6px;
-            color: #702536;
-        }
+.field {
+    margin-bottom: 19px;
+}
 
-        .upload-box small {
-            font-size: 11px;
-        }
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: bold;
+}
 
-        .choice-list {
-            display: grid;
-            gap: 11px;
-        }
+.optional {
+    color: #a98b91;
+    font-weight: normal;
+}
 
-        .choice {
-            display: flex;
-            gap: 12px;
-            padding: 15px;
-            border: 1px solid #ead9de;
-            border-radius: 9px;
-            cursor: pointer;
-            background: white;
-        }
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid #e6d5da;
+    border-radius: 7px;
+    background: #fffdfd;
+    color: #63313d;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+}
 
-        .choice:has(input:checked) {
-            border-color: #a85b6d;
-            background: #fff7f8;
-        }
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #a65b6d;
+    box-shadow: 0 0 0 3px #f8edef;
+}
 
-        .choice input {
-            accent-color: #702536;
-            margin-top: 3px;
-        }
+textarea {
+    min-height: 115px;
+    resize: vertical;
+}
 
-        .choice strong {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 5px;
-        }
 
-        .choice span {
-            color: #a77982;
-            font-size: 11px;
-            line-height: 1.5;
-        }
+.category-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
 
-        .button-area {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
-        }
+.category-option {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px;
+    border: 1px solid #ead9de;
+    border-radius: 8px;
+    background: #fffdfd;
+    font-size: 12px;
+    font-weight: normal;
+    cursor: pointer;
+    transition: 0.2s;
+}
 
-        button {
-            padding: 12px 20px;
-            border-radius: 7px;
-            font-weight: bold;
-            font-size: 12px;
-            cursor: pointer;
-        }
+.category-option:hover {
+    background: #fff7f8;
+    border-color: #d9b7c0;
+}
 
-        .btn-draft {
-            background: white;
-            color: #702536;
-            border: 1px solid #cbaab2;
-        }
+.category-option input {
+    accent-color: #702536;
+}
 
-        .btn-send {
-            background: #702536;
-            color: white;
-            border: 1px solid #702536;
-        }
 
-        .side-card {
-            background: white;
-            border: 1px solid #eedfe3;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 16px;
-        }
+.upload-box {
+    border: 2px dashed #dfc2ca;
+    background: #fff9fa;
+    border-radius: 10px;
+    padding: 27px 15px;
+    text-align: center;
+    color: #9d6673;
+}
 
-        .side-card h3 {
-            margin: 0 0 15px;
-            font-size: 15px;
-        }
+.upload-icon {
+    font-size: 27px;
+    margin-bottom: 8px;
+}
 
-        .info-item {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
-            line-height: 1.5;
-        }
+.upload-box strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #702536;
+}
 
-        .info-icon {
-            width: 30px;
-            height: 30px;
-            flex-shrink: 0;
-            border-radius: 8px;
-            background: #f8edef;
-            display: grid;
-            place-items: center;
-        }
+.upload-box small {
+    font-size: 11px;
+}
 
-        .info-item strong {
-            display: block;
-            font-size: 12px;
-            margin-bottom: 3px;
-        }
+.upload-button {
+    display: inline-block;
+    margin: 12px 0;
+    padding: 10px 20px;
+    border-radius: 7px;
+    background: #702536;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
 
-        .info-item p {
-            margin: 0;
-            color: #a77982;
-            font-size: 11px;
-        }
+.upload-button:hover {
+    background: #541b29;
+}
 
-        .help-card {
-            background: #fff1e7;
-            border-color: #f6dfce;
-        }
+#daftar-file {
+    margin-top: 12px;
+    color: #702536;
+    font-size: 12px;
+    line-height: 1.8;
+}
 
-        .help-card p {
-            color: #956c5c;
-            font-size: 12px;
-            line-height: 1.6;
-        }
 
-        .alert {
-            padding: 12px;
-            margin-bottom: 18px;
-            border-radius: 7px;
-            background: #eaf5ef;
-            color: #286b48;
-        }
+.choice-list {
+    display: grid;
+    gap: 11px;
+}
 
-        @media (max-width: 800px) {
-            nav {
-                padding: 0 18px;
-            }
+.choice {
+    display: flex;
+    gap: 12px;
+    padding: 15px;
+    border: 1px solid #ead9de;
+    border-radius: 9px;
+    cursor: pointer;
+    background: white;
+    transition: 0.2s;
+}
 
-            .menu {
-                display: none;
-            }
+.choice:hover {
+    border-color: #d9b7c0;
+    background: #fffdfd;
+}
 
-            .layout {
-                grid-template-columns: 1fr;
-            }
-        }
+.choice:has(input:checked) {
+    border-color: #a85b6d;
+    background: #fff7f8;
+}
 
-        @media (max-width: 500px) {
-            .category-list {
-                grid-template-columns: 1fr;
-            }
+.choice input {
+    accent-color: #702536;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
 
-            .card {
-                padding: 18px;
-            }
+.choice strong {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
 
-            .button-area {
-                flex-direction: column;
-            }
+.choice span {
+    color: #a77982;
+    font-size: 11px;
+    line-height: 1.5;
+}
 
-            .button-area button {
-                width: 100%;
-            }
-        }
+
+.button-area {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button {
+    padding: 12px 20px;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-draft {
+    background: white;
+    color: #702536;
+    border: 1px solid #cbaab2;
+}
+
+.btn-draft:hover {
+    background: #fff7f8;
+}
+
+.btn-send {
+    background: #702536;
+    color: white;
+    border: 1px solid #702536;
+}
+
+.btn-send:hover {
+    background: #541b29;
+    border-color: #541b29;
+}
+
+
+.side-card {
+    background: white;
+    border: 1px solid #eedfe3;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.side-card h3 {
+    margin: 0 0 15px;
+    font-size: 15px;
+}
+
+.info-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.info-icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #f8edef;
+    display: grid;
+    place-items: center;
+}
+
+.info-item strong {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+
+.info-item p {
+    margin: 0;
+    color: #a77982;
+    font-size: 11px;
+}
+
+.help-card {
+    background: #fff1e7;
+    border-color: #f6dfce;
+}
+
+.help-card p {
+    color: #956c5c;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+.alert {
+    padding: 12px;
+    margin-bottom: 18px;
+    border-radius: 7px;
+    background: #eaf5ef;
+    color: #286b48;
+}
+
+
+@media (max-width: 800px) {
+    nav {
+        padding: 10px 18px;
+    }
+
+    .menu {
+        display: none;
+    }
+
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==============================
+   RESPONSIVE MOBILE
+============================== */
+@media (max-width: 600px) {
+    .heading-content {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .btn-history {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 500px) {
+    .category-list {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .button-area {
+        flex-direction: column;
+    }
+
+    .button-area button {
+        width: 100%;
+    }
+
+    .page-heading h1 {
+        font-size: 23px;
+    }
+}
     </style>
 </head>
 
@@ -392,9 +516,17 @@
 <main class="page">
 
     <div class="page-heading">
-        <h1>Buat Laporan Khusus</h1>
-        <p>Sampaikan kejadian yang kamu alami dengan aman. Kami akan menjaga setiap informasi yang kamu berikan.</p>
+    <div class="heading-content">
+        <div>
+            <h1>Buat Laporan Khusus</h1>
+            <p>Sampaikan kejadian yang kamu alami dengan aman. Kami akan menjaga setiap informasi yang kamu berikan.</p>
+        </div>
+
+        <a href="{{ route('laporan.index') }}" class="btn-history">
+            <span>▤</span> Lihat Laporan Lama
+        </a>
     </div>
+</div>
 
     @if(session('success'))
         <div class="alert">{{ session('success') }}</div>
@@ -403,7 +535,9 @@
     <div class="layout">
 
         <div>
-            <form action="{{ route('laporan.store') }}" method="POST">
+            <form action="{{ route('laporan.store') }}"
+      method="POST"
+      enctype="multipart/form-data">
                 @csrf
 
                 <section class="card">
@@ -461,11 +595,31 @@
                     <h2 class="section-title">02. Unggah Bukti Digital</h2>
                     <p class="section-desc">Bukti pendukung dapat membantu proses penanganan laporan.</p>
 
-                    <div class="upload-box">
-                        <div class="upload-icon">☁</div>
-                        <strong>Area Unggah Bukti Digital</strong>
-                        <small>Fitur unggah file akan dihubungkan dengan penyimpanan privat pada tahap berikutnya.</small>
-                    </div>
+                    
+<div class="upload-box">
+    <div class="upload-icon">☁</div>
+    <strong>Area Unggah Bukti Digital</strong>
+
+    <p>Klik untuk memilih file atau seret file ke sini</p>
+
+    <label for="bukti" class="upload-button">
+        Pilih File
+    </label>
+
+    <input
+        type="file"
+        id="bukti"
+        name="bukti[]"
+        multiple
+        accept=".jpg,.jpeg,.png,.pdf,.mp3,.wav,.mp4,.mov"
+        style="display: none;"
+    >
+
+    <small>Format JPG, PNG, PDF, MP3, WAV, MP4, MOV. Maksimal 20 MB per file.</small>
+
+    <div id="daftar-file"></div>
+</div>
+
                 </section>
 
                 <section class="card">
@@ -560,6 +714,18 @@
 
     </div>
 </main>
+<script>
+    document.getElementById('bukti').addEventListener('change', function () {
+        const daftar = document.getElementById('daftar-file');
 
+        daftar.innerHTML = '';
+
+        Array.from(this.files).forEach(file => {
+            const item = document.createElement('div');
+            item.textContent = '📎 ' + file.name;
+            daftar.appendChild(item);
+        });
+    });
+</script>
 </body>
 </html>
